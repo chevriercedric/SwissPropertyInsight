@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swiss Property Insights | Transparence des Prix Immobiliers en Suisse</title>
+    <meta name="description" content="Swiss Property Insights - La première plateforme de transparence des prix immobiliers en Suisse. Découvrez les vrais prix de vente, pas les prix d'annonces.">
+    <meta name="keywords" content="immobilier suisse, prix immobilier, transparence, real estate, Suisse, investissement">
+    <meta property="og:title" content="Swiss Property Insights | Prix Immobiliers Réels en Suisse">
+    <meta property="og:description" content="Accédez aux vrais prix de vente immobiliers en Suisse. Données vérifiées, analyse par canton, alertes personnalisées.">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a1628;
+            --secondary: #1a2d4a;
+            --accent: #00d4aa;
+            --accent-light: #7fffd4;
+            --accent-dark: #00a080;
+            --orange: #ff6b35;
+            --yellow: #ffc107;
+            --text: #ffffff;
+            --text-muted: #8899aa;
+            --card-bg: rgba(26, 45, 74, 0.5);
+            --gradient-main: linear-gradient(135deg, #0a1628 0%, #1a2d4a 50%, #0d1f35 100%);
+            --gradient-accent: linear-gradient(135deg, #00d4aa 0%, #00a080 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--gradient-main);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Animated background */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        .bg-pattern::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            right: 10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 212, 170, 0.15) 0%, transparent 70%);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .bg-pattern::after {
+            content: '';
+            position: absolute;
+            bottom: 20%;
+            left: 5%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
+            animation: float 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, -30px); }
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1.2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: rgba(10, 22, 40, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 212, 170, 0.1);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--gradient-accent);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-cta {
+            background: var(--gradient-accent);
+            border: none;
+            color: var(--primary);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 212, 170, 0.3);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 5% 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            align-items: center;
+        }
+
+        .hero-content {
+            animation: fadeInLeft 1s ease-out;
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(0, 212, 170, 0.1);
+            border: 1px solid rgba(0, 212, 170, 0.3);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 .highlight {
+            position: relative;
+            color: var(--accent);
+        }
+
+        .hero h1 .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: rgba(0, 212, 170, 0.3);
+            z-index: -1;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            max-width: 500px;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--gradient-accent);
+            color: var(--primary);
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 212, 170, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            padding: 1rem 2rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Hero Visual */
+        .hero-visual {
+            position: relative;
+            animation: fadeInRight 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .property-card-demo {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .property-card-demo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-accent);
+        }
+
+        .property-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .property-location {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .property-location strong {
+            display: block;
+            font-size: 1.3rem;
+            color: var(--text);
+            margin-top: 0.3rem;
+        }
+
+        .reliability-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .reliability-green {
+            background: rgba(0, 212, 170, 0.2);
+            color: var(--accent);
+        }
+
+        .property-prices {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .price-box {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1.2rem;
+            border-radius: 12px;
+        }
+
+        .price-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .price-value.real {
+            color: var(--accent);
+        }
+
+        .price-value.listed {
+            color: var(--orange);
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        .price-diff {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: rgba(0, 212, 170, 0.1);
+            color: var(--accent);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .property-stats {
+            display: flex;
+            gap: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .stat-icon {
+            font-size: 1.1rem;
+        }
+
+        /* Floating elements */
+        .float-card {
+            position: absolute;
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            animation: floatCard 4s ease-in-out infinite;
+        }
+
+        .float-card.top-right {
+            top: -20px;
+            right: -30px;
+            animation-delay: 0.5s;
+        }
+
+        .float-card.bottom-left {
+            bottom: -20px;
+            left: -30px;
+            animation-delay: 1s;
+        }
+
+        @keyframes floatCard {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .float-card .number {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .float-card .label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 8rem 5%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1.5rem;
+        }
+
+        .section-description {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 2.5rem;
+            border-radius: 20px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 212, 170, 0.05) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(0, 212, 170, 0.2);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 212, 170, 0.1);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Comparison Section */
+        .comparison {
+            padding: 8rem 5%;
+            background: rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .comparison-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .comparison-card.highlight {
+            background: rgba(0, 212, 170, 0.1);
+            border-color: var(--accent);
+            transform: scale(1.05);
+        }
+
+        .comparison-card h4 {
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .comparison-card.highlight h4 {
+            color: var(--accent);
+        }
+
+        .comparison-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .comparison-item:last-child {
+            border-bottom: none;
+        }
+
+        .check {
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .cross {
+            color: var(--orange);
+            opacity: 0.5;
+        }
+
+        /* Pricing */
+        .pricing {
+            padding: 8rem 5%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 3rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .pricing-card.featured {
+            background: linear-gradient(135deg, rgba(0, 212, 170, 0.15) 0%, rgba(0, 160, 128, 0.1) 100%);
+            border-color: var(--accent);
+        }
+
+        .pricing-card.featured::before {
+            content: 'Populaire';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient-accent);
+            color: var(--primary);
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .plan-name {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .plan-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-price span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+
+        .plan-description {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .plan-features li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 0.95rem;
+        }
+
+        .plan-features li::before {
+            content: '✓';
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 8rem 5%;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, rgba(0, 212, 170, 0.1) 0%, rgba(0, 160, 128, 0.05) 100%);
+            border: 1px solid rgba(0, 212, 170, 0.2);
+            border-radius: 30px;
+            padding: 5rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-box h2 {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-box p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Email Form */
+        .email-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .email-form input {
+            flex: 1;
+            padding: 1.2rem 1.8rem;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            background: rgba(0, 0, 0, 0.2);
+            color: var(--text);
+            font-size: 1rem;
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .email-form input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .email-form input::placeholder {
+            color: var(--text-muted);
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 5% 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .swiss-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            margin-top: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-content {
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            .hero-description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-cta {
+                justify-content: center;
+            }
+
+            .hero-visual {
+                display: none;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .comparison-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .email-form {
+                flex-direction: column;
+            }
+
+            .cta-box {
+                padding: 3rem 2rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero-cta {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+
+    <nav>
+        <a href="#" class="logo">
+            <span class="logo-icon">🏠</span>
+            Swiss Property Insights
+        </a>
+        <ul class="nav-links">
+            <li><a href="#features">Fonctionnalités</a></li>
+            <li><a href="#comparison">Comparatif</a></li>
+            <li><a href="#pricing">Tarifs</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="nav-cta">Accès anticipé</button>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-grid">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    🚀 Lancement Q1 2025 – Inscrivez-vous maintenant
+                </div>
+                <h1>Découvrez les <span class="highlight">vrais prix</span> de l'immobilier suisse</h1>
+                <p class="hero-description">
+                    Fini les prix d'annonces gonflés. Swiss Property Insights vous révèle les prix de vente réels, vérifiés auprès des registres fonciers des 26 cantons.
+                </p>
+                <div class="hero-cta">
+                    <a href="#contact" class="btn-primary">
+                        Rejoindre la liste d'attente
+                        <span>→</span>
+                    </a>
+                    <a href="#features" class="btn-secondary">Comment ça marche</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="property-card-demo">
+                    <div class="property-header">
+                        <div class="property-location">
+                            Canton de Vaud
+                            <strong>Appartement 4.5 pièces, Lausanne</strong>
+                        </div>
+                        <div class="reliability-badge reliability-green">
+                            🟢 Vérifié
+                        </div>
+                    </div>
+                    <div class="property-prices">
+                        <div class="price-box">
+                            <div class="price-label">Prix affiché</div>
+                            <div class="price-value listed">CHF 1'250'000</div>
+                        </div>
+                        <div class="price-box">
+                            <div class="price-label">Prix de vente réel</div>
+                            <div class="price-value real">CHF 1'080'000</div>
+                            <div class="price-diff">↓ -13.6%</div>
+                        </div>
+                    </div>
+                    <div class="property-stats">
+                        <div class="stat-item">
+                            <span class="stat-icon">📐</span>
+                            <span>120 m²</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-icon">📅</span>
+                            <span>Vendu le 15.11.2024</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-icon">📍</span>
+                            <span>1003 Lausanne</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="float-card top-right">
+                    <div class="number">26</div>
+                    <div class="label">Cantons couverts</div>
+                </div>
+                <div class="float-card bottom-left">
+                    <div class="number">50K+</div>
+                    <div class="label">Transactions</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="section-header">
+            <p class="section-label">Fonctionnalités</p>
+            <h2 class="section-title">La transparence que vous méritez</h2>
+            <p class="section-description">
+                Swiss Property Insights démocratise l'accès aux données immobilières réelles, jusqu'ici réservées aux professionnels.
+            </p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Prix réels vérifiés</h3>
+                <p>Accédez aux prix de vente effectifs issus des registres fonciers cantonaux, pas aux prix d'annonces marketing.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🟢🟡🟠</div>
+                <h3>Système de fiabilité</h3>
+                <p>Chaque donnée est classée selon sa fiabilité : vert (registre foncier), jaune (source officielle), orange (estimation).</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Analyse par quartier</h3>
+                <p>Comparez les prix au m² par rue, quartier et commune. Identifiez les meilleures opportunités d'investissement.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔔</div>
+                <h3>Alertes personnalisées</h3>
+                <p>Soyez notifié dès qu'une vente correspond à vos critères : zone géographique, type de bien, budget.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📈</div>
+                <h3>Tendances du marché</h3>
+                <p>Suivez l'évolution des prix sur 5 ans. Anticipez les hausses et identifiez les marchés en croissance.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔗</div>
+                <h3>API pour professionnels</h3>
+                <p>Intégrez nos données dans vos outils. API REST complète pour banques, agences et développeurs.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="comparison" id="comparison">
+        <div class="section-header">
+            <p class="section-label">Comparatif</p>
+            <h2 class="section-title">Pourquoi Swiss Property Insights?</h2>
+            <p class="section-description">
+                Nous nous positionnons là où les autres ne vont pas : les vrais prix de vente.
+            </p>
+        </div>
+        <div class="comparison-grid">
+            <div class="comparison-card">
+                <h4>Homegate</h4>
+                <div class="comparison-item">Prix d'annonces <span class="check">✓</span></div>
+                <div class="comparison-item">Prix réels <span class="cross">✗</span></div>
+                <div class="comparison-item">Historique <span class="cross">✗</span></div>
+                <div class="comparison-item">API <span class="cross">✗</span></div>
+            </div>
+            <div class="comparison-card">
+                <h4>ImmoScout24</h4>
+                <div class="comparison-item">Prix d'annonces <span class="check">✓</span></div>
+                <div class="comparison-item">Prix réels <span class="cross">✗</span></div>
+                <div class="comparison-item">Historique <span class="cross">✗</span></div>
+                <div class="comparison-item">API <span class="cross">✗</span></div>
+            </div>
+            <div class="comparison-card highlight">
+                <h4>Swiss Property Insights</h4>
+                <div class="comparison-item">Prix d'annonces <span class="check">✓</span></div>
+                <div class="comparison-item">Prix réels <span class="check">✓</span></div>
+                <div class="comparison-item">Historique <span class="check">✓</span></div>
+                <div class="comparison-item">API <span class="check">✓</span></div>
+            </div>
+            <div class="comparison-card">
+                <h4>IAZI / Wüest</h4>
+                <div class="comparison-item">Prix d'annonces <span class="cross">✗</span></div>
+                <div class="comparison-item">Prix réels <span class="check">✓</span></div>
+                <div class="comparison-item">Historique <span class="check">✓</span></div>
+                <div class="comparison-item">Grand public <span class="cross">✗</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <div class="section-header">
+            <p class="section-label">Tarification</p>
+            <h2 class="section-title">Accessible à tous</h2>
+            <p class="section-description">
+                Des formules adaptées à chaque besoin, du particulier au professionnel de l'immobilier.
+            </p>
+        </div>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <p class="plan-name">Gratuit</p>
+                <p class="plan-price">CHF 0<span>/mois</span></p>
+                <p class="plan-description">Pour découvrir la plateforme</p>
+                <ul class="plan-features">
+                    <li>5 recherches par mois</li>
+                    <li>Données de base</li>
+                    <li>1 canton</li>
+                    <li>Publicités</li>
+                </ul>
+                <a href="#contact" class="btn-secondary" style="width: 100%; text-align: center;">Commencer</a>
+            </div>
+            <div class="pricing-card featured">
+                <p class="plan-name">Premium</p>
+                <p class="plan-price">CHF 9.90<span>/mois</span></p>
+                <p class="plan-description">Pour les acheteurs sérieux</p>
+                <ul class="plan-features">
+                    <li>Recherches illimitées</li>
+                    <li>26 cantons</li>
+                    <li>Historique 5 ans</li>
+                    <li>Alertes personnalisées</li>
+                    <li>Sans publicité</li>
+                </ul>
+                <a href="#contact" class="btn-primary" style="width: 100%; text-align: center;">Rejoindre</a>
+            </div>
+            <div class="pricing-card">
+                <p class="plan-name">Professionnel</p>
+                <p class="plan-price">CHF 99<span>/mois</span></p>
+                <p class="plan-description">Pour les agences & banques</p>
+                <ul class="plan-features">
+                    <li>Tout Premium inclus</li>
+                    <li>Accès API complet</li>
+                    <li>Export des données</li>
+                    <li>Analyses avancées</li>
+                    <li>Support prioritaire</li>
+                </ul>
+                <a href="#contact" class="btn-secondary" style="width: 100%; text-align: center;">Nous contacter</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section" id="contact">
+        <div class="cta-box">
+            <h2>Soyez parmi les premiers à savoir</h2>
+            <p>
+                Inscrivez-vous pour un accès anticipé et bénéficiez de tarifs de lancement exclusifs.
+            </p>
+            <form class="email-form" action="https://formspree.io/f/your-form-id" method="POST">
+                <input type="email" name="email" placeholder="votre@email.ch" required>
+                <button type="submit" class="btn-primary">S'inscrire</button>
+            </form>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 1rem;">
+                Pas de spam. Désabonnement en un clic.
+            </p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                🏠 Swiss Property Insights
+            </div>
+            <ul class="footer-links">
+                <li><a href="#">À propos</a></li>
+                <li><a href="#">Confidentialité</a></li>
+                <li><a href="#">Conditions</a></li>
+                <li><a href="mailto:contact@swissproperty.ch">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Swiss Property Insights. Tous droits réservés.</p>
+            <div class="swiss-badge">
+                <span>🇨🇭</span>
+                <span>Données 100% suisses</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form submission
+        document.querySelector('.email-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            alert('Merci ! Vous serez informé du lancement à ' + email);
+            this.reset();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(10, 22, 40, 0.98)';
+            } else {
+                nav.style.background = 'rgba(10, 22, 40, 0.9)';
+            }
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .pricing-card, .comparison-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
